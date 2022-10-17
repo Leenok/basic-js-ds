@@ -53,24 +53,79 @@ class BinarySearchTree {
     }
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(value) {
+    return findFunc(this._root, value);
+
+    function findFunc(node, value) {
+      if (!node) {
+        return null;
+      }
+      if (node.data === value) {
+        return node;
+      }
+      return value < node.data ?
+        findFunc(node.left, value) :
+        findFunc(node.right, value);
+    }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(value) {
+    this._root = removeNode(this._root, value);
+    function removeNode(node, value) {
+      if (!node) {
+        return null;
+      }
+      if (value < node.data) {
+        node.left = removeNode(node.left, value);
+        return node;
+      } else if (node.data < value) {
+        node.right = removeNode(node.right, value);
+        return node;
+      } else {
+        // no children
+        if (!node.left && !node.right) {
+          return null;
+        }
+        if (!node.right) {
+          node = node.left;
+          return node;
+        }
+        if (!node.left) {
+          node = node.right;
+          return node;
+        }
+        // both children
+        let minRight = node.right;
+        while (minRight.left) {
+          minRight = minRight.left;
+        }
+        node.data = minRight.data;
+        node.right = removeNode(node.right, minRight.data);
+        return node;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this._root) {
+      return null;
+    }
+    let node = this._root;
+    while (node.left) {
+      node = node.left;
+    }
+    return node.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this._root) {
+      return null;
+    }
+    let node = this._root;
+    while (node.right) {
+      node = node.right;
+    }
+    return node.data;
   }
 }
 
