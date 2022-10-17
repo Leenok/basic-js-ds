@@ -13,8 +13,9 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 class Stack {
-  push(/* element */) {
+  push(el) {
     throw new NotImplementedError('Not implemented');
+    return 
     // remove line with error and write your code here
   }
 
